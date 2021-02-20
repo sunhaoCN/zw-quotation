@@ -1,57 +1,180 @@
 @import "./normalize.css";
 
 /*:root -> 获取根元素html*/
-:root {
-    --color-text: #666;
-    --color-high-text: #ff5777;
-    --color-tint: #ff8198;
-    --color-background: #fff;
-    --font-size: 14px;
-    --line-height: 1.5;
-}
-
-*,
-*::before,
-*::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
+html,
 body {
-    font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
-    user-select: none; /* 禁止用户鼠标在页面上选中文字/图片等 */
-    -webkit-tap-highlight-color: transparent; /* webkit是苹果浏览器引擎，tap点击，highlight背景高亮，color颜色，颜色用数值调节 */
-    background: var(--color-background);
-    color: var(--color-text);
-    /* rem vw/vh */
-    width: 100vw;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+
+}
+i,b,strong,em,span,a,li,h3,h2,h1{
+  font-style: normal;
+  font-weight: 500;
+  font-family:'PingFang-SC-Medium';
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity .2s;
 }
 
-a {
-    color: var(--color-text);
-    text-decoration: none;
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
+}
+
+html,
+body,
+#__nuxt,
+#__layout,
+#__layout>div {
+  width: 100%;
+  height: auto;
+  background: #f9f9f9;
+  position: relative;
+
+}
+
+#__nuxt {
+  width: 100%;
+
+  height: auto;
+  background: #fff;
+  overflow: scroll;
+  /* -webkit-overflow-scrolling: touch; */
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 0.3rem;
+  /* z-index: 1000; */
+}
+
+.flex-h,
+.flex-v {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-h {
+  flex-direction: row;
+}
+
+.flex-v {
+  flex-direction: column;
+}
+
+.flex1 {
+  flex: 1;
+  overflow: hidden;
 }
 
 
-.clear-fix::after {
-    clear: both;
-    content: '';
-    display: block;
-    width: 0;
-    height: 0;
-    visibility: hidden;
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
 }
 
-.clear-fix {
-    zoom: 1;
+.inline-calendar.inline-calendar-blue td.is-today,
+.inline-calendar.inline-calendar-blue td.is-today.is-disabled {
+  color: #000;
 }
 
-.left {
-    float: left;
+.inline-calendar.inline-calendar-blue td.current>span.vux-calendar-each-date {
+  background-color: #439AFD;
 }
 
-.right {
-    float: right;
+.inline-calendar.inline-calendar-blue .vux-prev-icon,
+.inline-calendar.inline-calendar-blue .vux-next-icon {
+  border-color: #439AFD;
 }
 
+.inline-calendar.inline-calendar-blue .calendar-header>div {
+  float: initial;
+  widows: 3rem;
+  margin: 0 auto;
+}
+
+.inline-calendar.inline-calendar-blue .calendar-year>span {
+  display: none;
+}
+
+.inline-calendar.inline-calendar-blue .calendar-year-txt.calendar-title {
+  font-size: 0.4rem;
+  font-weight: bold;
+}
+
+.inline-calendar.inline-calendar-blue table {
+  border-top: solid 1px #e5e5e5;
+  border-bottom: solid 1px #e5e5e5;
+}
+
+.inline-calendar.inline-calendar-blue th {
+  line-height: 30px;
+}
+
+.inline-calendar.inline-calendar-blue td {
+  padding: 0;
+}
+
+.time-picker .scroller-component {
+  height: 3.5rem;
+}
+
+.time-picker .scroller-indicator {
+  height: 0.7rem;
+  top: 1.4rem;
+  background: #439AFD;
+  opacity: 0.15;
+}
+
+.time-picker .scroller-item {
+  height: 0.7rem;
+  line-height: 0.7rem;
+}
+
+.time-picker .scroller-mask {
+  background-size: 100% 1.5rem;
+}
+
+.popup1 .weui-cells_checkbox .weui-check:checked+.vux-checklist-icon-checked:before {
+  color: #439AFD;
+}
+
+.weui-loading_toast.vux-loading .weui-toast {
+  width: 2rem;
+  min-height: 2rem;
+}
+input::-webkit-input-placeholder { /* WebKit browsers */
+  color: #000;
+
+}
+input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color: #000;
+}
+input::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color: #000;
+}
+input:-ms-input-placeholder { /* Internet Explorer 10+ */
+  color: #000;
+}
+.page-enter-active,.page-leave-active{
+  transition: opacity 0.2s;
+}
+.page-enter,.page-leave-active{
+  opacity: 0;
+}
+input::-webkit-input-placeholder { /* WebKit browsers */
+  color: #BBB;
+}
+input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color: #BBB;
+}
+input::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color: #BBB;
+}
+input:-ms-input-placeholder { /* Internet Explorer 10+ */
+  color: #BBB;
+}
+.imgIcon{
+  display: inline-block;
+}
