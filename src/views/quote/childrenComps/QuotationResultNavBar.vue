@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <nav-bar class="quotation-nav">
-      <div slot="left" class="back">
+      <div slot="left" class="back" @click="backClick">
         <img  src="~assets/img/navbar/top_icon_back.svg" alt="">
       </div>
       <div slot="center">报价结果</div>
@@ -16,6 +16,12 @@
     name: "QuotationNavBar",
     components: {
       NavBar
+    },
+    methods: {
+      backClick() {
+
+        this.$router.go(-1)
+      }
     }
   }
 </script>
