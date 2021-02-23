@@ -7,104 +7,116 @@
           <div class="chooseArea">
             <div class="selectList">
               <div class="flex-h absBox">
-                <span class="flex-h flex1 pos" style="position: relative;">
-                  <b>产品类型</b>
-
+                <span class="flex-h flex1 pos">
+                  <b class="selectB">产品类型</b>
+                  <v-select :options="productTypeList"
+                            placeholder="请选择类型"
+                            label="type" class="vSelect"
+                            v-model="quotationInfo.productType"
+                            :appendToBody="true"
+                            :clearable="false"
+                            @search:blur="blurAdjust">
+                  </v-select>
                 </span>
               </div>
               <div class="flex-h absBox">
 								<span class="flex-h flex1">
-									<b>长度</b>
-									<input @blur="blurAdjust" placeholder="请输入长度（cm）"  type="number" class="flex-1">
+									<b>长度(cm)</b>
+									<input @blur="blurAdjust"
+                         placeholder="请输入长度"
+                         type="number"
+                         class="flex-1"
+                         v-model="quotationInfo.length">
 								</span>
               </div>
               <div class="flex-h absBox">
 								<span class="flex-h flex1">
-									<b>宽度</b>
-									<input @blur="blurAdjust" placeholder="请输入宽度（cm）"  type="number" class="flex-1">
+									<b>宽度(cm)</b>
+									<input @blur="blurAdjust"
+                         placeholder="请输入宽度"
+                         type="number"
+                         class="flex-1"
+                         v-model="quotationInfo.width">
 								</span>
               </div>
               <div class="flex-h absBox">
 								<span class="flex-h flex1">
-									<b>高度</b>
-									<input @blur="blurAdjust" placeholder="请输入高度（cm）"  type="number" class="flex-1">
+									<b>高度(cm)</b>
+									<input @blur="blurAdjust"
+                         placeholder="请输入高度"
+                         type="number"
+                         v-model="quotationInfo.height"
+                         class="flex-1">
 								</span>
               </div>
               <div class="flex-h absBox">
 								<span class="flex-h flex1">
-									<b>厚度</b>
-									<input @blur="blurAdjust" placeholder="请输入高度（mm）"  type="number" class="flex-1">
+									<b>厚度(mm)</b>
+									<input @blur="blurAdjust"
+                         placeholder="请输入厚度"
+                         type="number"
+                         class="flex-1"
+                         v-model="quotationInfo.thickness">
 								</span>
               </div>
               <div class="flex-h absBox">
                 <span class="flex-h flex1 pos" style="position: relative;">
                   <b>产品材质</b>
-
+                  <v-select :options="materialTypeList"
+                             placeholder="请选择材质"
+                             label="type" class="vSelect"
+                             :appendToBody="true"
+                             @search:blur="blurAdjust"
+                             v-model="quotationInfo.material"
+                             :clearable="false"
+                             :selectable="option => (this.quotationInfo.color.type == '植绒' ? !(option.type.includes('PET')
+                                || option.type.includes('PP')) : true)">
+                  </v-select>
                 </span>
               </div>
               <div class="flex-h absBox">
                 <span class="flex-h flex1 pos" style="position: relative;">
                   <b>产品颜色</b>
-
+                  <v-select :options="colorTypeList"
+                            placeholder="请选择颜色"
+                            label="type" class="vSelect"
+                            :appendToBody="true"
+                            @search:blur="blurAdjust"
+                            v-model="quotationInfo.color"
+                            :clearable="false"
+                            :selectable="option => (this.quotationInfo.material.type == 'PET'
+                            || this.quotationInfo.material.type == 'PP'? !option.type.includes('植绒')
+                            : true)">
+                  </v-select>
                 </span>
               </div>
               <div class="flex-h absBox">
 								<span class="flex-h flex1">
 									<b>产品数量</b>
-									<input @blur="blurAdjust" placeholder="请输入产品数量"  type="number" class="flex-1">
+									<input @blur="blurAdjust"
+                         placeholder="请输入产品数量"
+                         type="number"
+                         class="flex-1"
+                         v-model="quotationInfo.count">
 								</span>
               </div>
               <div class="flex-h absBox">
 								<span class="flex-h flex1">
 									<b>产品标签</b>
-									<input @blur="blurAdjust" placeholder="请输入报价标签"  type="number" class="flex-1">
+									<input @blur="blurAdjust"
+                         placeholder="请输入报价标签"
+                         type="text"
+                         class="flex-1"
+                         v-model="quotationInfo.label">
 								</span>
               </div>
             </div>
           </div>
           <div class="btnGroup">
-            <button class="reset">重置</button>
+            <button class="reset" @click="init">重置</button>
             <button class="submit" @click="quote">开始报价</button>
           </div>
-          <ul>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-            <li>2</li>
-          </ul>
         </div>
-
       </div>
     </scroll>
     <main-tab-bar/>
@@ -116,6 +128,7 @@
   import QuotationNavBar from "./childrenComps/QuotationNavBar";
   import Scroll from "components/common/scroll/Scroll";
 
+  import vSelect from "vue-select"
 
   export default {
     name: "Quotation",
@@ -124,11 +137,34 @@
       QuotationNavBar,
       Scroll,
 
+      vSelect
     },
     data() {
       return {
-        productTypeList: ['a','b','c'],
-        defaultValue: '请选择产品类型'
+        productTypeList: [{type: '有边'}, {type: '无边'}],
+        materialTypeList:[{type: 'PS'}, {type: 'PVC'}, {type: 'PET'}, {type: 'PP'}],
+        colorTypeList:[{type: '透明A'}, {type: '透明B'}, {type: '黑色A'}, {type: '黑色B'},
+                      {type: '白色A'}, {type: '白色B'},  {type: '其他'},  {type: '植绒'}],
+
+        quotationInfo: {
+          productType: '',
+          length: null,
+          width: null,
+          height: null,
+          thickness: null,
+          material: '',
+          color: '',
+          count: null,
+          label: '',
+
+          unitPrice: null,
+          density: null,
+        },
+      }
+    },
+    computed: {
+      materialSelectable() {
+
       }
     },
     methods: {
@@ -137,19 +173,48 @@
       },
 
       blurAdjust() {
-        setTimeout(function() {
-          var scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
-          window.scrollTo(0, Math.max(scrollHeight - 1, 0));
-        }, 100);
+
+        setTimeout(() => {
+          if (document.activeElement.tagName == 'INPUT' || document.activeElement.tagName == 'TEXTAREA') {
+            return
+          }
+
+          let result = 'pc';
+          if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) { //判断iPhone|iPad|iPod|iOS
+            result = 'ios'
+          } else if (/(Android)/i.test(navigator.userAgent)) { //判断Android
+            result = 'android'
+          }
+
+          if (result = 'ios') {
+            document.activeElement.scrollIntoViewIfNeeded(true);
+          }
+        }, 50)
+
+      },
+
+      init() {
+        this.quotationInfo.productType = '';
+        this.quotationInfo.label = '';
+        this.quotationInfo.count = null;
+        this.quotationInfo.color = '';
+        this.quotationInfo.material = '';
+        this.quotationInfo.thickness = null;
+        this.quotationInfo.height = null;
+        this.quotationInfo.length = null;
+        this.quotationInfo.width = null;
       }
     },
-    created() {
+    mounted() {
+      let params = this.$store.state.BaseParams;
 
     }
   }
 </script>
 
 <style scoped>
+  @import "~vue-select/dist/vue-select.css";
+
   .main {
     position: relative;
     height: 100vh;
@@ -193,7 +258,7 @@
   }
 
   .selectList {
-    padding: 0 0.7rem;
+    padding: 1.2rem 0.7rem;
     flex: 1;
     box-sizing: border-box;
   }
@@ -212,7 +277,7 @@
 
   .absBox input {
     text-align: right;
-    flex: 1;
+    flex: 1.2;
     height: 2.2rem;
     line-height: 2.2rem;
     font-size: 1.2rem;
@@ -220,7 +285,7 @@
     outline: none;
     border: none;
     width: 100%;
-    padding-left: 0.7rem;
+    /*padding-left: 0.7rem;*/
     background: rgba(0, 0, 0, 0);
     color: #222;
     letter-spacing: 0.04rem;
@@ -231,6 +296,7 @@
     font-size: 1.2rem;
     font-weight: bold;
     letter-spacing: 0.04rem;
+    flex: 1
   }
 
   .pos {
@@ -243,6 +309,7 @@
     /*height: 2rem;*/
     padding: 1rem 0.3rem;
   }
+
   .btnGroup button {
     width: 100%;
     height: 3rem;
@@ -265,6 +332,16 @@
     background: #6CBF20;
     color: #FFF;
     /*width: 50%;*/
+  }
+
+  .vSelect {
+    flex: 1;
+    /*margin-right: 0.5rem;*/
+  }
+
+  .selectB {
+    flex: 1;
+    /*margin-right: 1.9rem;*/
   }
 
 </style>

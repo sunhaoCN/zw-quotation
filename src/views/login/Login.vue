@@ -7,10 +7,10 @@
         </div>
         <div class="boxloginWrap">
           <div class="loginInput">
-            <input type="text" v-model="loginForm.username" placeholder="用户名" class="username"/>
+            <input @blur="blurAdjust" type="text" v-model="loginForm.username" placeholder="用户名" class="username"/>
           </div>
           <div class="passwordInput">
-            <input type="text" v-model="loginForm.password" placeholder="密码" class="password"/>
+            <input @blur="blurAdjust" type="text" v-model="loginForm.password" placeholder="密码" class="password"/>
           </div>
 
           <div class="logbtn">
@@ -64,6 +64,24 @@
             alert('账号或密码错误');
           }
         }
+      },
+      blurAdjust() {
+        setTimeout(() => {
+          if (document.activeElement.tagName == 'INPUT' || document.activeElement.tagName == 'TEXTAREA') {
+            return
+          }
+
+          let result = 'pc';
+          if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) { //判断iPhone|iPad|iPod|iOS
+            result = 'ios'
+          } else if (/(Android)/i.test(navigator.userAgent)) { //判断Android
+            result = 'android'
+          }
+
+          if (result = 'ios') {
+            document.activeElement.scrollIntoViewIfNeeded(true);
+          }
+        }, 50)
       }
     }
   }
