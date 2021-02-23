@@ -40,6 +40,13 @@ const store = new Vuex.Store({
       {material: 'PP', color: '白色B', price: 13, density: 0.1},
       {material: 'PP', color: '其他', price: 13, density: 0.1},
     ],
+    ProcessParams: {
+      heightSpace: 0.8,
+      lengthMax: 120,
+      widthMax: 70,
+      widthBetterMax: 75,
+      costPerRoll: 100,
+    }
 
   },
 
@@ -48,13 +55,32 @@ const store = new Vuex.Store({
     changeLogin (state, user) {
       state.Authorization = user.Authorization;
       localStorage.setItem('Authorization', user.Authorization);
+    },
+
+    getCostPerRoll(state, params) {
+      if(params.material == 'PS' && params.color == '植绒') {
+        state.ProcessParams.costPerRoll = 150
+      }
+      else if(params.color == '黑色A' || params.color == '黑色B') {
+        state.ProcessParams.costPerRoll = 120
+      }
+      else if(params.color == '其他') {
+        state.ProcessParams.costPerRoll = 150
+      }
+      else {
+        state.ProcessParams.costPerRoll = 100
+      }
     }
   },
 
   getters: {
     getUsers(state) {
       return state.Users
-    }
+    },
+
+  },
+  actions: {
+
   }
 });
 
