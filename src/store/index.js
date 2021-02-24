@@ -46,6 +46,11 @@ const store = new Vuex.Store({
       widthMax: 70,
       widthBetterMax: 75,
       costPerRoll: 100,
+      pricePerRoll: 705,
+      weightPerRoll: 50,
+      minHeightSpace: 1,
+      noSideHeightSpace: 1,
+      widthPunchSpace: 4,
     }
 
   },

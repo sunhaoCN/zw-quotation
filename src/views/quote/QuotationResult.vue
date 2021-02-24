@@ -5,6 +5,9 @@
     <scroll class="content">
       <div class="ssreWrap flex-h">
         <div class="top2 scrollerDiv">
+          <span class="flex-h flex1 label">
+            {{param.label}}
+          </span>
           <div class="infoArea">
             <div class="titleBox flex-h">
                <span class="flex-h flex1 pos">
@@ -83,11 +86,11 @@
             <div class="absBox flex-h">
                <span class="flex-h flex1 pos">
                 <b>单个报价：</b>
-                <b>--</b>
+                <b>{{offerPrice}}</b>
               </span>
               <span class="flex-h flex1 pos">
                 <b>税率(%)：</b>
-                <b>--</b>
+                <b>{{tax}}</b>
               </span>
             </div>
             <div class="airBox flex-h"/>
@@ -96,61 +99,61 @@
             <div class="absBox flex-h odd">
                <span class="flex-h flex1 pos">
                 <b>材料数量需求</b>
-                <b>10</b>
+                <b>{{materialRollCount}}</b>
               </span>
             </div>
             <div class="absBox flex-h even">
                <span class="flex-h flex1 pos">
                 <b>材料总量(kg)</b>
-                <b>1450</b>
+                <b>{{materialRollCount * pricePerRoll}}</b>
               </span>
             </div>
             <div class="absBox flex-h odd">
                <span class="flex-h flex1 pos">
                 <b>材料成本</b>
-                <b>1.198</b>
+                <b>{{costPerProduct}}</b>
               </span>
             </div>
             <div class="absBox flex-h even">
                <span class="flex-h flex1 pos">
                 <b>加工成本</b>
-                <b>0.141</b>
+                <b>{{costProcessPerProduct}}</b>
               </span>
             </div>
             <div class="absBox flex-h odd">
                <span class="flex-h flex1 pos">
                 <b>单个成本</b>
-                <b>1.3277</b>
+                <b>{{totalCostPerProduct}}</b>
               </span>
             </div>
             <div class="absBox flex-h even">
                <span class="flex-h flex1 pos">
                 <b>单个含税成本</b>
-                <b>1.3377</b>
+                <b>{{totalCostPerProductTax}}</b>
               </span>
             </div>
             <div class="absBox flex-h odd">
                <span class="flex-h flex1 pos">
                 <b>总成本</b>
-                <b>26553.67</b>
+                <b>{{totalCost}}</b>
               </span>
             </div>
             <div class="absBox flex-h even">
                <span class="flex-h flex1 pos">
                 <b>含税总成本</b>
-                <b>26900.43</b>
+                <b>{{totalCostTax}}</b>
               </span>
             </div>
             <div class="absBox flex-h odd">
                <span class="flex-h flex1 pos">
                 <b>销售额</b>
-                <b>--</b>
+                <b>{{salesValue}}</b>
               </span>
             </div>
             <div class="absBox flex-h even">
                <span class="flex-h flex1 pos">
                 <b>利润率(%)</b>
-                <b>--</b>
+                <b>{{profitRate}}</b>
               </span>
             </div>
           </div>
@@ -174,6 +177,8 @@
     data() {
       return {
         param: {},
+        tax: '--',
+        offerPrice: '--',
 
       }
     },
@@ -183,37 +188,124 @@
     mounted() {
       this.param = this.$route.query
       console.log(this.param);
-      console.log(this.punchSpace);
-      console.log(this.lengthCount);
+      console.log(this.paiMoOutput);
+      console.log(this.realOutputPerRoll);
     },
     computed: {
-      //长度排模
+      //长度排模数量
       lengthCount() {
         // return this.param.lengthMax/;
         return parseInt(this.param.productType === '有边'
           ? (Number(this.param.lengthMax) - Number(this.punchSpace))
           /(Number(this.param.length)
-            + Number((Number(this.param.height) * Number(this.param.heightSpace) > 1
-              ? Number(this.param.height) * Number(this.param.heightSpace) : 1)))
-          : (Number(this.param.lengthMax) - Number(this.punchSpace)) /(Number(this.param.length) + 1));
+            + Number((Number(this.param.height) * Number(this.param.heightSpace) > Number(this.param.minHeightSpace)
+              ? Number(this.param.height) * Number(this.param.heightSpace) : Number(this.minHeightSpace))))
+          : (Number(this.param.lengthMax) - Number(this.punchSpace)) /(Number(this.param.length) + Number(this.param.noSideHeightSpace)));
 
       },
 
-      //宽度排模
+      //宽度排模数量
       widthCount() {
         // return this.param.lengthMax/;
         return parseInt(this.param.productType === '有边'
-          ? (Number(this.param.widthMax) - 4)
+          ? (Number(this.param.widthMax) - Number(this.param.widthPunchSpace))
           /(Number(this.param.width)
-            + Number((Number(this.param.height) * Number(this.param.heightSpace) > 1
-              ? Number(this.param.height) * Number(this.param.heightSpace) : 1)))
-          : (Number(this.param.widthMax) - 4) /(Number(this.param.width) + 1));
+            + Number((Number(this.param.height) * Number(this.param.heightSpace) > Number(this.param.minHeightSpace)
+              ? Number(this.param.height) * Number(this.param.heightSpace) : Number(this.param.minHeightSpace))))
+          : (Number(this.param.widthMax) - Number(this.param.widthPunchSpace)) /(Number(this.param.width) + Number(this.param.noSideHeightSpace)));
 
       },
 
       //长度冲床留边
       punchSpace() {
         return  this.param.height < 4 ? 4 : this.param.height;
+      },
+
+      //长度排模
+      lengthTotal() {
+        return (this.param.productType === '有边'
+                ? (Number(this.param.length)
+                  + Number((Number(this.param.height) * Number(this.param.heightSpace) > Number(this.param.minHeightSpace)
+                  ? Number(this.param.height) * Number(this.param.heightSpace) : Number(this.param.minHeightSpace))))
+                : (Number(this.param.length) + Number(this.param.noSideHeightSpace))) * this.lengthCount + Number(this.punchSpace);
+      },
+
+      //宽度排模
+      widthTotal() {
+        return (this.param.productType === '有边'
+          ? (Number(this.param.width)
+            + Number((Number(this.param.height) * Number(this.param.heightSpace) > Number(this.param.minHeightSpace)
+              ? Number(this.param.height) * Number(this.param.heightSpace) : Number(this.param.minHeightSpace))))
+          : (Number(this.param.width) + Number(this.param.noSideHeightSpace))) * this.widthCount + Number(this.param.widthPunchSpace);
+      },
+
+      //材料数量需求，需要多少卷
+      materialRollCount() {
+        return Math.round(Number(this.param.count) / this.realOutputPerRoll + 1);
+      },
+
+      //实际每卷产量
+      realOutputPerRoll() {
+        return (this.paiMoOutput - 2) * this.lengthCount * this.widthCount;
+      },
+
+      //排模产量
+      paiMoOutput() {
+        return parseInt(Number(this.param.weightPerRoll)
+          / (Number(this.param.thickness) / 1000)
+          / Number(this.param.density)
+          / this.lengthTotal
+          / this.widthTotal);
+      },
+
+      //每卷价格
+      pricePerRoll(){
+        return this.param.pricePerRoll;
+      },
+
+      //单个产品成本
+      costPerProduct() {
+        return (Number(this.pricePerRoll) / Number(this.realOutputPerRoll)).toFixed(4);
+      },
+
+      //单个加工成本
+      costProcessPerProduct() {
+        return  (Number(this.param.costPerRoll) / Number(this.realOutputPerRoll)).toFixed(4);
+      },
+
+      //单个总成本
+      totalCostPerProduct() {
+        return (Number(this.costPerProduct) + Number(this.costProcessPerProduct)).toFixed(4);
+      },
+
+      //单个含税总成本
+      totalCostPerProductTax() {
+         return this.tax !== '--'
+                  ? (Number(this.totalCostPerProduct) * (1 + Number(this.tax / 100))).toFixed(4) : '--';
+      },
+
+      //总成本
+      totalCost() {
+        return (Number(this.totalCostPerProduct) * Number(this.param.count)).toFixed(1);
+      },
+
+      //总成本
+      totalCostTax() {
+        return this.tax !== '--'
+                  ? (Number(this.totalCostPerProductTax) * Number(this.param.count)).toFixed(1) : '--';
+      },
+
+      //销售额
+      salesValue() {
+        return this.offerPrice !== '--'
+                  ? (Number(this.offerPrice) * Number(this.param.count)).toFixed(1) : '--' ;
+      },
+
+      //利润率
+      profitRate() {
+        return this.salesValue !== '--'
+                  ? ((Number(this.salesValue) - Number(this.totalCost())) * 100
+                      / Number(this.totalCost())).toFixed(1) : '--' ;
       }
     }
   }
@@ -255,7 +347,7 @@
   }
 
   .infoArea {
-    margin-top: 1.1rem;
+    margin-top: 0.8rem;
     width: 100%;
     /*height: 20rem;*/
     box-shadow: 0px 0px 20px 0px rgba(204, 204, 204, 0.3);
@@ -276,7 +368,7 @@
   }
 
   .titleBox img {
-    width: 2rem;
+    width: 1.8rem;
   }
 
   .titleBox b {
@@ -367,5 +459,16 @@
   .odd {
     height: 3rem;
     line-height: 3rem;
+  }
+
+  .label {
+    margin-top: 1rem;
+    text-align: left;
+    width: 50%;
+    color: #999999;
+    border-radius: 0.5rem;
+    background-color: #f9f9f9;
+    box-shadow: 0px 0px 40px 0px rgba(204, 204, 204, 0.3);
+    border: #999 solid 0.3px;
   }
 </style>

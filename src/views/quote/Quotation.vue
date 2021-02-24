@@ -196,6 +196,11 @@
                 widthMax: this.$store.state.ProcessParams.widthMax,
                 widthBetterMax: this.$store.state.ProcessParams.widthBetterMax,
                 costPerRoll: this.$store.state.ProcessParams.costPerRoll,
+                pricePerRoll: this.$store.state.ProcessParams.pricePerRoll,
+                weightPerRoll: this.$store.state.ProcessParams.weightPerRoll,
+                minHeightSpace: this.$store.state.ProcessParams.minHeightSpace,
+                noSideHeightSpace: this.$store.state.ProcessParams.noSideHeightSpace,
+                widthPunchSpace: this.$store.state.ProcessParams.widthPunchSpace,
               }
             })
           }
