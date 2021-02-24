@@ -67,7 +67,7 @@
               </span>
               <span class="flex-h flex1 pos">
                 <b>宽度排摸：</b>
-                <b>10</b>
+                <b>{{widthCount}}</b>
               </span>
             </div>
             <div class="absBox flex-h">
@@ -86,8 +86,8 @@
                 <b>--</b>
               </span>
               <span class="flex-h flex1 pos">
-                <b>税率：</b>
-                <b>5%</b>
+                <b>税率(%)：</b>
+                <b>--</b>
               </span>
             </div>
             <div class="airBox flex-h"/>
@@ -174,6 +174,7 @@
     data() {
       return {
         param: {},
+
       }
     },
     methods: {
@@ -182,10 +183,37 @@
     mounted() {
       this.param = this.$route.query
       console.log(this.param);
+      console.log(this.punchSpace);
+      console.log(this.lengthCount);
     },
     computed: {
+      //长度排模
       lengthCount() {
         // return this.param.lengthMax/;
+        return parseInt(this.param.productType === '有边'
+          ? (Number(this.param.lengthMax) - Number(this.punchSpace))
+          /(Number(this.param.length)
+            + Number((Number(this.param.height) * Number(this.param.heightSpace) > 1
+              ? Number(this.param.height) * Number(this.param.heightSpace) : 1)))
+          : (Number(this.param.lengthMax) - Number(this.punchSpace)) /(Number(this.param.length) + 1));
+
+      },
+
+      //宽度排模
+      widthCount() {
+        // return this.param.lengthMax/;
+        return parseInt(this.param.productType === '有边'
+          ? (Number(this.param.widthMax) - 4)
+          /(Number(this.param.width)
+            + Number((Number(this.param.height) * Number(this.param.heightSpace) > 1
+              ? Number(this.param.height) * Number(this.param.heightSpace) : 1)))
+          : (Number(this.param.widthMax) - 4) /(Number(this.param.width) + 1));
+
+      },
+
+      //长度冲床留边
+      punchSpace() {
+        return  this.param.height < 4 ? 4 : this.param.height;
       }
     }
   }
