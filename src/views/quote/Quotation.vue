@@ -167,7 +167,7 @@
 
     },
     methods: {
-      ...mapMutations(['getCostPerRoll']),
+      ...mapMutations(['getCostPerRoll', 'getLengthPunchSpace']),
       quote() {
         if(this.infoExamine())
         {
@@ -177,6 +177,8 @@
             this.quotationInfo.unitPrice = param[0].price;
             this.quotationInfo.density = param[0].density;
             this.getCostPerRoll({material: this.quotationInfo.material.type, color: this.quotationInfo.color.type})
+            this.getLengthPunchSpace({height: this.quotationInfo.height});
+
             this.$router.push({
               path: '/quote/result',
               query: {
@@ -191,16 +193,19 @@
                 label: this.quotationInfo.label,
                 unitPrice: this.quotationInfo.unitPrice,
                 density: this.quotationInfo.density,
-                heightSpace: this.$store.state.ProcessParams.heightSpace,
+                lengthHeightSpace: this.$store.state.ProcessParams.lengthHeightSpace,
+                widthHeightSpace: this.$store.state.ProcessParams.widthHeightSpace,
                 lengthMax: this.$store.state.ProcessParams.lengthMax,
                 widthMax: this.$store.state.ProcessParams.widthMax,
                 widthBetterMax: this.$store.state.ProcessParams.widthBetterMax,
-                costPerRoll: this.$store.state.ProcessParams.costPerRoll,
-                pricePerRoll: this.$store.state.ProcessParams.pricePerRoll,
                 weightPerRoll: this.$store.state.ProcessParams.weightPerRoll,
                 minHeightSpace: this.$store.state.ProcessParams.minHeightSpace,
                 noSideHeightSpace: this.$store.state.ProcessParams.noSideHeightSpace,
                 widthPunchSpace: this.$store.state.ProcessParams.widthPunchSpace,
+                lengthPunchSpace: this.$store.state.ProcessParams.lengthPunchSpace,
+
+                costPerRoll: this.$store.state.CostParams.costPerRoll,
+                tax: this.$store.state.CostParams.tax,
               }
             })
           }
